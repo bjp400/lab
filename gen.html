@@ -42,7 +42,7 @@
                 .then(response => response.text())
                 .then(text => {
                     navigator.clipboard.writeText(text).then(() => {
-                        alert( fileName + ' code, output, steps copy aytu, enjoyyyyy..!!!');
+                        alert( fileName + ' code, output, steps copied');
                     }).catch(err => {
                         console.error('Error copying text: ', err);
                     });
