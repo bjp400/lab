@@ -1,6 +1,7 @@
   PROGRAM 4 
  
 Develop a program to demonstrate 2D transformation on basic objects 
+#In this program replace <file_path> with path of file
 import pandas as pd 
 def find_s_algorithm(file_path): 
     data = pd.read_csv(file_path) 
