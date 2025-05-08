@@ -1,0 +1,54 @@
+'''Implement the non-parametric Locally Weighted Regression algorithm in order to fit data points. 
+Select appropriate data set for your experiment and draw graphs''' 
+import numpy as np 
+import matplotlib.pyplot as plt 
+ 
+# Locally Weighted Linear Regression 
+def locally_weighted_regression(X_train, Y_train, X_query, tau=0.1): 
+    m, n = X_train.shape 
+    Y_train = Y_train.reshape(-1, 1)  # Reshape to column vector 
+     
+    # Add a bias term (intercept) for linear regression 
+    X_train = np.concatenate([np.ones((m, 1)), X_train], axis=1) 
+    X_query = np.concatenate([np.ones((X_query.shape[0], 1)), X_query], axis=1) 
+     
+    # Initialize the predicted values 
+    Y_pred = np.zeros(X_query.shape[0]) 
+ 
+    # Perform locally weighted regression for each query point 
+    for i in range(X_query.shape[0]): 
+        # Calculate the weight matrix W 
+        weights = np.exp(-np.sum((X_train - X_query[i])**2, axis=1) / (2 * tau**2)) 
+        W = np.diag(weights)  # Diagonal matrix of weights 
+         
+        # Calculate the theta using the formula (X.T W X)^-1 X.T W Y 
+        theta = np.linalg.inv(X_train.T @ W @ X_train) @ (X_train.T @ W @ Y_train) 
+         
+        # Predict the value for the query point 
+        Y_pred[i] = X_query[i] @ theta 
+     
+    return Y_pred 
+ 
+# Generate synthetic data for regression (e.g., y = sin(2 * pi * x) + noise) 
+np.random.seed(42) 
+X = np.sort(np.random.rand(100, 1), axis=0)  # 100 random data points in the range [0, 1] 
+Y = np.sin(2 * np.pi * X) + 0.1 * np.random.randn(100, 1)  # y = sin(2 * pi * x) + noise 
+ 
+# Create a range of query points for predictions 
+X_query = np.linspace(0, 1, 100).reshape(-1, 1) 
+ 
+# Apply locally weighted regression with different values of tau 
+tau_values = [0.1, 0.3, 0.5, 1.0, 2.0] 
+plt.figure(figsize=(10, 6)) 
+ 
+for tau in tau_values: 
+    Y_pred = locally_weighted_regression(X, Y, X_query, tau) 
+    plt.plot(X_query, Y_pred, label=f'tau={tau}') 
+ 
+# Plot the original data points 
+plt.scatter(X, Y, color='red', label='Data points') 
+plt.xlabel('X') 
+plt.ylabel('Y') 
+plt.title('Locally Weighted Regression') 
+plt.legend() 
+plt.show()
