@@ -1,92 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RAJ</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
-        .headline {
-            font-size: 36px;
-            margin: 20px 0;
-            color: #333;
-        }
-        .container {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            padding: 20px;
-        }
-        .image-box {
-            width: 300px;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease-in-out;
-        }
-        .image-box:hover {
-            transform: scale(1.05);
-        }
-        .image-box img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-        @media (max-width: 768px) {
-            .container {
-                flex-direction: column;
-                align-items: center;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>KhiKhiKhi</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+    .headline {
+      font-size: 36px;
+      margin: 20px 0;
+      color: #333;
+    }
+    .container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      padding: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .image-box {
+      background-color: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease-in-out;
+    }
+    .image-box:hover {
+      transform: scale(1.05);
+    }
+    .image-box img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .caption {
+      padding: 10px;
+      font-size: 14px;
+      color: #555;
+    }
+  </style>
 </head>
 <body>
-    <h1 class="headline">PRADHAN MANTRI LAB EXAM MALPRACTICE YOJNA</h1>
-    <P>1st image=output 1; 2nd image=output2; 3rd image=output 2; 4th image = output3; 5th image = output4; 6th image = output5;</P>
-    <div class="container">
-        
-        <a href="" class="image-box">
-            <img src="./ml1out.png" alt="PROGRAM 1 OUTPUT">
-        </a>
-        <a href="" class="image-box">
-            <img src="./ml2out.png" alt="PROGRAM 2 OUTPUT">
-        </a>
-        <a href="" class="image-box">
-            <img src="./ml2out2.png" alt="PROGRAM 2 OUTPUT">
-        </a>
-        <a href="" class="image-box">
-            <img src="./ml3out.png" alt="PROGRAM 3 OUTPUT">
-        </a>
-        <a href="" class="image-box">
-            <img src="./ml4out.png" alt="PROGRAM 4 OUTPUT">
-            
-        </a>
-        <a href="" class="image-box">
-            <img src="./ml5out.png" alt="PROGRAM 5 OUTPUT">
-        </a>
-
-          <a href="" class="image-box">
-            <img src="./ml6out.png" alt="PROGRAM 6 OUTPUT">
-        </a>
-          <a href="" class="image-box">
-            <img src="./ml7out.png" alt="PROGRAM 7 OUTPUT">
-        </a>
-          <a href="" class="image-box">
-            <img src="./ml8out.png" alt="PROGRAM 8 OUTPUT">
-        </a>
-          <a href="" class="image-box">
-            <img src="./ml9out.png" alt="PROGRAM 9 OUTPUT">
-        </a>
-          <a href="" class="image-box">
-            <img src="./ml10out.png" alt="PROGRAM 10 OUTPUT">
-        </a>
+  <h1 class="headline">PRADHAN MANTRI LAB EXAM MALPRACTICE YOJNA</h1>
+  <p>duh..!!</p>
+  
+  <div class="container">
+    <div class="image-box">
+      <img src="./ml1out.png" alt="PROGRAM 1 OUTPUT">
+      <div class="caption">Output 1</div>
     </div>
+    <div class="image-box">
+      <img src="./ml2out.png" alt="PROGRAM 2 OUTPUT">
+      <div class="caption">Output 2</div>
+    </div>
+    <div class="image-box">
+      <img src="./ml2out2.png" alt="PROGRAM 2 OUTPUT 2">
+      <div class="caption">Output 2 </div>
+    </div>
+    <div class="image-box">
+      <img src="./ml3out.png" alt="PROGRAM 3 OUTPUT">
+      <div class="caption">Output 3</div>
+    </div>
+    <div class="image-box">
+      <img src="./ml4out.png" alt="PROGRAM 4 OUTPUT">
+      <div class="caption">Output 4</div>
+    </div>
+    <div class="image-box">
+      <img src="./ml5out.png" alt="PROGRAM 5 OUTPUT">
+      <div class="caption">Output 5</div>
+    </div>
+    <div class="image-box">
+      <img src="./ml6out.png" alt="PROGRAM 6 OUTPUT">
+      <div class="caption">Output 6</div>
+    </div>
+    <div class="image-box">
+      <img src="./ml7out.png" alt="PROGRAM 7 OUTPUT">
+      <div class="caption">Output 7</div>
+    </div>
+    <div class="image-box">
+      <img src="./ml8out.png" alt="PROGRAM 8 OUTPUT">
+      <div class="caption">Output 8</div>
+    </div>
+    <div class="image-box">
+      <img src="./ml9out.png" alt="PROGRAM 9 OUTPUT">
+      <div class="caption">Output 9</div>
+    </div>
+    <div class="image-box">
+      <img src="./ml10out.png" alt="PROGRAM 10 OUTPUT">
+      <div class="caption">Output 10</div>
+    </div>
+  </div>
 </body>
 </html>
-
