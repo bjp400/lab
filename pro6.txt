@@ -1,0 +1,72 @@
+!pip install transformers 
+
+# Import the sentiment analysis pipeline from Hugging Face 
+from transformers import pipeline 
+
+# Load the sentiment analysis pipeline 
+print("Loading Sentiment Analysis Model…") 
+sentiment_analyzer = pipeline("sentiment-analysis") 
+
+# Function to analyze sentiment 
+def analyze_sentiment(text): 
+    result = sentiment_analyzer(text)[0]  # Get the first result 
+    label = result['label']  # Sentiment label (POSITIVE/NEGATIVE) 
+    score = result['score']  # Confidence score 
+    print(f"\n📝 Input Text: {text}") 
+    print(f"📝 Sentiment: {label} (Confidence: {score:.4f})\n") 
+    return result 
+
+# Example real-world application: Customer feedback analysis 
+customer_reviews = [ 
+    "The product is amazing! I love it so much.", 
+    "I'm very disappointed. The service was terrible.", 
+    "It was an average experience, nothing special.", 
+    "Absolutely fantastic quality! Highly recommended.", 
+    "Not great, but not the worst either." 
+]
+
+# Analyze sentiment for multiple reviews 
+print("\nCustomer Sentiment Analysis Results:") 
+for review in customer_reviews: 
+    analyze_sentiment(review)
+"""==================================Output=================================: 
+uirement already satisfied: urllib3<3,>=1.21.1 in /usr/local/lib/python3.11/dist-packages (from requests->transformers) 
+(2.4.0) 
+Requirement already satisfied: certifi>=2017.4.17 in /usr/local/lib/python3.11/dist-packages (from requests
+>transformers) (2025.4.26) 
+No model was supplied, defaulted to distilbert/distilbert-base-uncased-finetuned-sst-2-english and revision 714eb0f 
+(https://huggingface.co/distilbert/distilbert-base-uncased-finetuned-sst-2-english). 
+Using a pipeline without specifying a model name and revision in production is not recommended. 
+Loading Sentiment Analysis Model… 
+/usr/local/lib/python3.11/dist-packages/huggingface_hub/utils/_auth.py:94: UserWarning:  
+The secret `HF_TOKEN` does not exist in your Colab secrets. 
+To authenticate with the Hugging Face Hub, create a token in your settings tab 
+(https://huggingface.co/settings/tokens), set it as secret in your Google Colab and restart your session. 
+You will be able to reuse this secret in all of your notebooks. 
+Please note that authentication is recommended but still optional to access public models or datasets. 
+warnings.warn( 
+config.json: 100% 
+629/629 [00:00<00:00, 52.7kB/s] 
+Xet Storage is enabled for this repo, but the 'hf_xet' package is not installed. Falling back to regular HTTP download. 
+For better performance, install the package with: `pip install huggingface_hub[hf_xet]` or `pip install hf_xet` 
+WARNING:huggingface_hub.file_download:Xet Storage is enabled for this repo, but the 'hf_xet' package is not 
+installed. Falling back to regular HTTP download. For better performance, install the package with: `pip install 
+huggingface_hub[hf_xet]` or `pip install hf_xet` 
+model.safetensors: 100% 
+268M/268M [00:01<00:00, 237MB/s] 
+tokenizer_config.json: 100% 
+48.0/48.0 [00:00<00:00, 2.29kB/s] 
+vocab.txt: 100% 
+232k/232k [00:00<00:00, 4.28MB/s] 
+Device set to use cpu 
+Customer Sentiment Analysis Results: 
+Input Text: The product is amazing! I love it so much. 
+Sentiment: POSITIVE (Confidence: 0.9999) 
+Input Text: I'm very disappointed. The service was terrible. 
+Sentiment: NEGATIVE (Confidence: 0.9998) 
+Input Text: It was an average experience, nothing special. 
+Sentiment: NEGATIVE (Confidence: 0.9995) 
+Input Text: Absolutely fantastic quality! Highly recommended. 
+Sentiment: POSITIVE (Confidence: 0.9999) 
+Input Text: Not great, but not the worst either. 
+Sentiment: NEGATIVE (Confidence: 0.9961)"""
