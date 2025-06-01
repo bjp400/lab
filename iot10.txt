@@ -1,0 +1,92 @@
+10                     MQTT SENSOR  PUBLISH
+
+#include <DHT.h>                   // Data ---> D3 VCC ---> 3V3 GND ---> GND
+#include <ESP8266WiFi.h>
+#include <OneWire.h>
+#include "Adafruit_MQTT.h"
+#include "Adafruit_MQTT_Client.h"
+// WiFi parameters
+#define WLAN_SSID       "powerakk"
+#define WLAN_PASS       "kumaranil"
+// Adafruit IO
+#define AIO_SERVER      "io.adafruit.com"
+#define AIO_SERVERPORT  1883
+#define AIO_USERNAME "AKK400"
+#define AIO_KEY  "aio_wguz10UVzY63YU87SqlmnqBgjK6t"
+WiFiClient client;
+// Setup the MQTT client class by passing in the WiFi client and MQTT server and login details.
+Adafruit_MQTT_Client mqtt(&client, AIO_SERVER, AIO_SERVERPORT, AIO_USERNAME, AIO_KEY);
+Adafruit_MQTT_Publish Temperature1 = Adafruit_MQTT_Publish(&mqtt, AIO_USERNAME "/feeds/temperature");
+Adafruit_MQTT_Publish Humidity1 = Adafruit_MQTT_Publish(&mqtt, AIO_USERNAME "/feeds/humidity");
+#define DHTTYPE DHT11
+#define DHTPin D6
+DHT dht(DHTPin, DHTTYPE);
+float hum = 0;  //Stores humidity value
+float temp = 0; //Stores temperature value
+void setup() {
+  dht.begin();
+  Serial.begin(115200);
+  Serial.println(F("Adafruit IO Example"));
+  // Connect to WiFi access point.
+  Serial.println(); Serial.println();
+  delay(10);
+  Serial.print(F("Connecting to "));
+  Serial.println(WLAN_SSID);
+  WiFi.begin(WLAN_SSID, WLAN_PASS);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(F("."));
+  }
+  Serial.println();
+  Serial.println(F("WiFi connected"));
+  Serial.println(F("IP address: "));
+  Serial.println(WiFi.localIP());
+  // connect to adafruit io
+  connect();
+}
+// connect to adafruit io via MQTT
+void connect() 
+{
+  int8_t ret;
+  if (mqtt.connected()) 
+  {
+    return;
+  }
+  Serial.print("Connecting to MQTT... ");
+  uint8_t retries = 3;
+  while ((ret = mqtt.connect()) != 0) { // connect will return 0 for connected
+       Serial.println(mqtt.connectErrorString(ret));
+       Serial.println("Retrying MQTT connection in 5 seconds...");
+       mqtt.disconnect();
+       delay(5000);  // wait 5 seconds
+       retries--;
+       if (retries == 0) {
+         // basically die and wait for WDT to reset me
+         while (1);
+       }
+  }
+  Serial.println("MQTT Connected!");
+}
+void loop() {
+  // ping adafruit io a few times to make sure we remain connected
+  if(! mqtt.ping(3)) {
+    // reconnect to adafruit io
+    if(! mqtt.connected())
+      connect();
+  }
+  //delay(2000);
+  hum=dht.readHumidity();
+  temp=dht.readTemperature();
+  Serial.print(temp); Serial.print(" °C, "); 
+  Serial.print(hum); Serial.println(" %RH");
+  delay(5000);
+   if (! Temperature1.publish(temp)) {                     //Publish to Adafruit
+      Serial.println(F("Failed"));
+    } 
+       if (! Humidity1.publish(hum)) {                     //Publish to Adafruit
+      Serial.println(F("Failed"));
+    }
+    else {
+      Serial.println(F("Sent!"));
+    }
+}
