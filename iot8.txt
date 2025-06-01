@@ -1,0 +1,40 @@
+8          THINGSPEAK  UPLOAD    
+
+#include <ThingSpeak.h>
+#include <ESP8266WiFi.h>
+#include <SoftwareSerial.h>
+#include <DHT.h>
+#define DHTTYPE DHT11
+#define DHTPin D5
+DHT dht (DHTPin,DHTTYPE);
+unsigned long ch_no=2934556;
+const char*write_api="RZ2DYYK2UE0Z89YI";
+char ssid[]="ewitece67";
+char pass[]="12345678ece";
+volatile float temperature=0,humidity=0;
+WiFiClient client;
+void setup()
+{
+  pinMode(DHTPin,INPUT);
+  Serial.begin(9600);
+  WiFi.begin(ssid,pass);
+  while (WiFi.status()!=WL_CONNECTED)
+  {
+    delay(500);
+    Serial.print(".");
+  }
+    Serial.println("WiFi connected");
+    Serial.println(WiFi.localIP());
+    ThingSpeak.begin(client);
+  }
+  void loop()
+  {
+    temperature=dht.readTemperature();
+    humidity=dht.readHumidity();
+    Serial.print("Temperature ="),Serial.print(temperature);
+    Serial.print("Humidity ="),Serial.print(humidity);
+    ThingSpeak.setField(1,humidity);
+    ThingSpeak.setField(2,temperature);
+    ThingSpeak.writeFields(ch_no, write_api);
+    delay(5000);
+}
