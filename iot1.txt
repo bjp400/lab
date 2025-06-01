@@ -1,0 +1,36 @@
+1A            LED ON 
+
+#define ledPin 9
+void setup() {
+  pinMode(ledPin, OUTPUT);
+}
+void loop() {
+  digitalWrite(ledPin, HIGH);   
+  delay(1000);                  
+  digitalWrite(ledPin, LOW);    
+  delay(2000);                  
+}
+
+--------------------------------------------------------------
+1B            PUSH BUTTON
+
+int ledPin = 12;
+int switchPin = 2;
+int val = 0;
+void setup() {
+  pinMode(ledPin, OUTPUT);
+  pinMode(switchPin, INPUT);
+  Serial.begin(9600);
+}
+void loop() {
+  val = digitalRead(switchPin);
+  if (val == HIGH) {
+    digitalWrite(ledPin, HIGH);
+    Serial.println("Button is pressed, LED IS ON");
+  } else {
+    digitalWrite(ledPin, LOW);
+    Serial.println("Button is released, LED IS OFF");
+  }
+  delay(500);
+}
+
