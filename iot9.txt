@@ -1,0 +1,45 @@
+9         THINGSPEAK  RETRIVE  
+ 
+#include <ThingSpeak.h>
+#include <ESP8266WiFi.h>
+#include <Adafruit_Sensor.h>
+const char* ssid = "ewitceek";
+const char* pass = "ewit@12345";
+int statusCode = 0;
+WiFiClient client;
+unsigned long channelID = 209878385;
+const char* myCounterReadAPIkey = "9IQM9DJCE3F16";
+const int fieldNumber = 2;
+void setup() {
+    Serial.begin(9600);
+    WiFi.begin(ssid, pass);
+    while (WiFi.status() != WL_CONNECTED) {
+        delay(500);
+        Serial.print(".");
+    }
+    Serial.println("WiFi connected");
+    Serial.println(WiFi.localIP());
+    ThingSpeak.begin(client);
+    delay(1000);
+}
+void loop() {
+    long humidity = ThingSpeak.readLongField(channelID, fieldNumber, myCounterReadAPIkey);
+    statusCode = ThingSpeak.getLastReadStatus();
+    if (statusCode == 200) {
+        Serial.print(" % RH = ");
+        Serial.println(humidity);
+    } else {
+        Serial.println("Unable to read channel data or No Internet");
+    }
+    delay(1000);
+    long temp = ThingSpeak.readLongField(channelID, fieldNumber, myCounterReadAPIkey);
+    statusCode = ThingSpeak.getLastReadStatus();
+    if (statusCode == 200) {
+        Serial.print("Temperature in degree celsius = ");
+        Serial.println(temp);
+    } else {
+        Serial.println("Unable to read channel data or No Internet");
+    }
+    delay(15000);
+}
+
