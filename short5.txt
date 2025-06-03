@@ -1,0 +1,37 @@
+Program 5
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import accuracy_score
+
+np.random.seed(0)
+X = np.random.rand(100, 1)
+
+y = np.zeros(100)
+for i in range(50):
+    if X[i] <= 0.5:
+        y[i] = 1
+    else:
+        y[i] = 2
+
+X_train = X[:50]
+y_train = y[:50]
+X_test = X[50:]
+y_test = y[50:]
+
+k_values = [1, 2, 3, 4, 5, 20, 30]
+print("KNN Classification Results:")
+for k in k_values:
+    knn = KNeighborsClassifier(n_neighbors=k)
+    knn.fit(X_train, y_train)
+    y_pred = knn.predict(X_test)
+    acc = accuracy_score(y_test, y_pred)
+    print(f"Accuracy for k={k}: {acc:.2f}")
+
+plt.scatter(X_train, y_train, color='blue', label='Train')
+plt.scatter(X_test, y_test, color='green', label='Test')
+plt.xlabel('X')
+plt.ylabel('Class')
+plt.title('KNN Data Points')
+plt.legend()
+plt.show()
