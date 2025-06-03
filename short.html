@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHORT PROGRAMS OF ML</title>
+     <link rel="icon" type="image/png" href="./bjp.jpeg">
+    <style>
+        button {
+            margin: 10px;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        
+        .headline {
+            font-size: 36px;
+            margin: 20px 0;
+            color: #333;
+        }
+
+        .footer img{
+            width: 50px; /* Adjust size */
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="headline">LAST MINUTE CODING CLUB</h1>
+    <h4>CLICK ON BUTTON BELOW AND STEPS WILL BE COPIED</h4>
+    <button onclick="copyText('short1.txt')">Copy PROGRAM 1</button>
+    <button onclick="copyText('short2.txt')">Copy PROGRAM 2</button>
+    <button onclick="copyText('short3.txt')">Copy PROGRAM 3</button>
+    <button onclick="copyText('short4.txt')">Copy PROGRAM 4</button>
+    <button onclick="copyText('short5.txt')">Copy PROGRAM 5</button>
+    <button onclick="copyText('short6.txt')">Copy PROGRAM 6</button>
+    <button onclick="copyText('short7.txt')">Copy PROGRAM 7</button>
+    <button onclick="copyText('short8.txt')">Copy PROGRAM 8</button>
+    <button onclick="copyText('short9.txt')">Copy PROGRAM 9</button>
+    <button onclick="copyText('short10.txt')">Copy PROGRAM 10</button>
+
+    <script>
+        function copyText(fileName) {
+            fetch(fileName)  // Fetch the text file
+                .then(response => response.text())
+                .then(text => {
+                    navigator.clipboard.writeText(text).then(() => {
+                        alert( fileName + ' CC steps copied');
+                    }).catch(err => {
+                        console.error('Error copying text: ', err);
+                    });
+                })
+                .catch(err => {
+                    console.error('Error loading file: ', err);
+                    alert('Failed to load file ' + fileName);
+                });
+        }
+    </script>
+
+</body>
+
+     <footer class="footer">
+   
+    <p>&copy; Raj</p>
+</footer>
+</html>
