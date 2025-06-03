@@ -1,0 +1,27 @@
+Progra m6 
+import numpy as np
+import matplotlib.pyplot as plt
+
+def lwr(X, Y, Xq, tau):
+    Xb = np.c_[np.ones(len(X)), X]         # Add bias
+    Xqb = np.c_[np.ones(len(Xq)), Xq]
+    Yp = []
+
+    for x in Xqb:
+        w = np.exp(-np.sum((Xb - x)**2, axis=1) / (2 * tau**2))
+        W = np.diag(w)
+        theta = np.linalg.pinv(Xb.T @ W @ Xb) @ Xb.T @ W @ Y
+        Yp.append(x @ theta)
+
+    return np.array(Yp)
+
+# Data: sin(2πx) + noise
+X = np.sort(np.random.rand(100, 1))
+Y = np.sin(2 * np.pi * X) + 0.1 * np.random.randn(100, 1)
+Xq = np.linspace(0, 1, 100).reshape(-1, 1)
+
+# Plot
+for t in [0.1, 0.3, 1.0]:
+    plt.plot(Xq, lwr(X, Y, Xq, t), label=f'tau={t}')
+plt.scatter(X, Y, color='r', s=10)
+plt.legend(); plt.title("LWR"); plt.show()
