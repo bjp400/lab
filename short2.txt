@@ -1,0 +1,15 @@
+Progar m2
+import pandas as pd, seaborn as sns, matplotlib.pyplot as plt
+from sklearn.datasets import fetch_california_housing
+
+# Load data
+df = fetch_california_housing(as_frame=True).frame
+
+# Correlation matrix + heatmap
+sns.heatmap(df.corr(), annot=True, cmap='coolwarm', fmt='.2f')
+plt.title('Correlation Matrix'); plt.show()
+
+# Pair plot (first 5 features only)
+sns.pairplot(df.iloc[:, :5])
+plt.suptitle('Pair Plot of Selected Features', y=1.02)
+plt.show()
